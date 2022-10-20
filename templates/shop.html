@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="shop_page"></div>
+<div class="container d-flex align-items-center justify-content-between pt-2">
+    <div>
+        <h4 class="" style="font-weight: 400;">The community shop for all your pet needs</h4>
+        <p><a class="text-secondary" href="{{ url_for('register') }}">Register</a> to begin buying or selling</p>
+    </div>
+    <div class="dropdown">
+        <button class="btn dropdown-toggle sortButton" data-bs-toggle="dropdown" id="dropdownMenuButton1" type="button">Sort by</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+                <form method="post">
+                    <button class="dropdown-item" type="submit" name="priceLow">Price (low)</button>
+                </form>
+            </li>
+            <li>
+                <form method="post">
+                    <button class="dropdown-item" type="submit" name="priceHigh">Price (high)</button>
+                </form>
+            </li>
+            <li>
+                <form method="post">
+                    <button class="dropdown-item" type="submit" name="name">Name</button>
+                </form>
+            </li>
+            <li>
+                <form method="post">
+                    <button class="dropdown-item" type="submit" name="recent">Recent</button>
+                </form>
+            </li>
+        </ul>
+    </div>    
+</div>
+<div class="d-flex justify-content-center container-xxl text-center p-1 fade_in-1">
+    <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
+        {% for listing in listings %}
+            <div class="container p-3 m-0" style="max-width: 425px;">
+                <div class="container border shadow rounded bg-light" style="padding: 0;">
+                    <div class="">
+                        <div class="image_container p-4" >
+                            {% set img_link = 'pet_images/' + listingData[loop.index0]['image_ref'] %}
+                            <img class="pet_image" src="{{ url_for('static', filename=img_link) }}" alt="animal picture">
+                        </div>
+                    </div>
+                    <h3 class="m-2 pet_title">{{ listingData[loop.index0]['name'].title() }} <span class="text-secondary">${{ listingData[loop.index0]['price'] }}</span></h3>
+                    <div class="container p-2">
+                        <P class="aminal_description text-start">{{ listingData[loop.index0]['description'] }}</P>
+                    </div>
+                    {% set listingId = listings[loop.index0]['listing_id'] %}
+                    <div class="cart_button_container container bg-light">
+                        <button type="button" class="btn btn-success mb-2 cart_button" onclick="addToCart({{listingId}}); toggleCartButton({{listingId}}); refreshCartStyle()">Add to Cart</button>
+                        <button id="{{listingId}}" type="button" class="btn btn-danger mb-2 cart_button _remove" onclick="removeFromCart({{listingId}}); toggleCartButton({{listingId}}); refreshCartStyle()">Remove from Cart</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

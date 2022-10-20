@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='newDogLogo2.png') }}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <title>Pet-Mart</title>
+</head>
+<body class="bg-light">
+    <nav class="navbar fixed-top navbar-light bg-primary text-dark navbar-expand-sm justify-content-center shadow-sm">
+        <div class="container-fluid">
+            <div class="me-auto w-50 navbar-brand d-flex">
+                <div class="logo_container">
+                    <a href="{{ url_for('index') }}"><img class="logo_image" src="{{ url_for('static', filename='newDogLogo.png')}}" alt="Logo"></a>
+                </div>
+                <h3 class="m-2 align-middle"><a class="navbar-brand brand_name" href="{{ url_for('index') }}">Pet-Mart</a></h3>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto w-100 justify-content-center p-1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('shop') }}">Shop</a>
+                    </li>
+                    {% if not 'username' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('sell') }}">Sell</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('account') }}">Account</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ms-auto justify-content-end w-100 p-1 nav_username align-items-center">
+                    <li class="nav-item" id="checkout"></li>
+                    <li class="nav-item" id="navCart"></li>
+                    {% if 'username' in session %}
+                        <li class="nav-item" style="text-decoration: none;">
+                            <a class="nav-link text-dark" href="{{ url_for('account') }}">{{ session['username'] }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="alerts" class="text-center text-danger">
+            {% if error %}
+                <h3 class="p-2">{{error}}</h3>
+            {% endif %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                    <h3 class="p-2">{{message}}</h3>
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <div class="container text-secondary p-4 footer_container">
+            <p>© Joseph West</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

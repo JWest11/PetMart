@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="contianer-fluid">
+    <div class="container-xxl bg-light p-2 gallery_outer mb-2 mt-2">
+        <div class="gallery_container">
+            <div id="gallery1"><div class="bg-dark filler"></div></div>
+            <div id="gallery2"></div>
+        </div>
+    </div>
+    <div class="container pt-2 text-center">
+        <a href="{{ url_for('shop') }}" id="shopNow" type="button" class="btn btn-primary">Shop Now</a>
+    </div>
+    <div class="container-xxl">
+        <div class="row text-center">
+            <div class="col m-4 border">
+                <h3 class="p-3">The one stop shop for all things pets:</h3>
+                <div class="container p-4 text-start">
+                    <p>We offer a secure marketplace to buy and sell every pet one could want. We worry about security so you don't have to.</p>
+                </div>
+            </div>
+            <div class="col m-4 border">
+                <div class="header_reviews m-2">
+                    <h3 class="p-2">Over 5000</h3>
+                    <div class="star_container"><img src="{{ url_for('static', filename='miscImages/5stars2.png') }}" alt=""></div>
+                    <h3 class="p-2">reviews:</h3>
+                </div>
+                <div class="container p-4 text-start">
+                    <p>Having been in the business for over 5 years, Pet-Mart is a reputable and trusted site to buy and sell pets.</p>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+{% endblock %}
